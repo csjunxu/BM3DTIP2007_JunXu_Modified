@@ -5,10 +5,20 @@ clear all
 % TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
 % TT_fpath = fullfile(TT_Original_image_dir, '*real.png');
 
-GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_MeanImage\';
-GT_fpath = fullfile(GT_Original_image_dir, '*.png');
-TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_NoisyImage\';
-TT_fpath = fullfile(TT_Original_image_dir, '*.png');
+% GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_MeanImage\';
+% GT_fpath = fullfile(GT_Original_image_dir, '*.png');
+% TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_NoisyImage\';
+% TT_fpath = fullfile(TT_Original_image_dir, '*.png');
+
+% GT_Original_image_dir =  'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
+% GT_fpath = fullfile(GT_Original_image_dir, '*.png');
+% TT_Original_image_dir =  'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
+% TT_fpath = fullfile(TT_Original_image_dir, '*.png');
+
+GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\our_Results\Real_MeanImage\';
+GT_fpath = fullfile(GT_Original_image_dir, '*.JPG');
+TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\our_Results\Real_NoisyImage\';
+TT_fpath = fullfile(TT_Original_image_dir, '*.JPG');
 
 GT_im_dir  = dir(GT_fpath);
 TT_im_dir  = dir(TT_fpath);
@@ -27,7 +37,7 @@ for alpha = [1]
     
     PSNR_yhat_alg   =  [];
     SSIM_yhat_alg   =  [];
-    for i = 21:im_num
+    for i = 1:im_num
         
         z = im2double( imread(fullfile(TT_Original_image_dir, TT_im_dir(i).name)) );
         y = im2double( imread(fullfile(GT_Original_image_dir, GT_im_dir(i).name)) );
@@ -67,22 +77,22 @@ for alpha = [1]
             D = D*(maxzans-minzans)+minzans;
             
             %% Apply the inverse transformation
-            %             yhat(:, :, c) = GenAnscombe_inverse_exact_unbiased(D,sigma,alpha,g);   % exact unbiased inverse
-            %             yhat_cfa(:, :, c) = GenAnscombe_inverse_closed_form(D,sigma,alpha,g);  % closed-form approximation
-            %             yhat_asy(:, :, c) =  (D/2).^2 - 1/8 - sigma^2;                       % asymptotical inverse
+            yhat(:, :, c) = GenAnscombe_inverse_exact_unbiased(D,sigma,alpha,g);   % exact unbiased inverse
+            yhat_cfa(:, :, c) = GenAnscombe_inverse_closed_form(D,sigma,alpha,g);  % closed-form approximation
+            yhat_asy(:, :, c) =  (D/2).^2 - 1/8 - sigma^2;                       % asymptotical inverse
             yhat_alg(:, :, c) =  (D/2).^2 - 3/8 - sigma^2;                       % algebraic inverse
         end
         
         
-        %         PSNR_yhat   =  [PSNR_yhat csnr( y*255, yhat*255, 0, 0 )];
-        %         SSIM_yhat   = [SSIM_yhat  cal_ssim( y*255, yhat*255, 0, 0 )];
-        %         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat(end), SSIM_yhat(end );
-        %         PSNR_yhat_cfa   = [PSNR_yhat_cfa  csnr( y*255, yhat_cfa*255, 0, 0 )];
-        %         SSIM_yhat_cfa   = [SSIM_yhat_cfa  cal_ssim( y*255, yhat_cfa*255, 0, 0 )];
-        %         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat_cfa(end), SSIM_yhat_cfa(end) );
-        %         PSNR_yhat_asy   = [PSNR_yhat_asy  csnr( y*255, yhat_asy*255, 0, 0 )];
-        %         SSIM_yhat_asy   =  [SSIM_yhat_asy cal_ssim( y*255, yhat_asy*255, 0, 0 )];
-        %         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat_asy(end), SSIM_yhat_asy(end) );
+        PSNR_yhat   =  [PSNR_yhat csnr( y*255, yhat*255, 0, 0 )];
+        SSIM_yhat   = [SSIM_yhat  cal_ssim( y*255, yhat*255, 0, 0 )];
+        fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat(end), SSIM_yhat(end ) );
+        PSNR_yhat_cfa   = [PSNR_yhat_cfa  csnr( y*255, yhat_cfa*255, 0, 0 )];
+        SSIM_yhat_cfa   = [SSIM_yhat_cfa  cal_ssim( y*255, yhat_cfa*255, 0, 0 )];
+        fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat_cfa(end), SSIM_yhat_cfa(end) );
+        PSNR_yhat_asy   = [PSNR_yhat_asy  csnr( y*255, yhat_asy*255, 0, 0 )];
+        SSIM_yhat_asy   =  [SSIM_yhat_asy cal_ssim( y*255, yhat_asy*255, 0, 0 )];
+        fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat_asy(end), SSIM_yhat_asy(end) );
         PSNR_yhat_alg   = [PSNR_yhat_alg  csnr( y*255, yhat_alg*255, 0, 0 )];
         SSIM_yhat_alg   = [SSIM_yhat_alg  cal_ssim( y*255, yhat_alg*255, 0, 0 )];
         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat_alg(end), SSIM_yhat_alg(end) );
@@ -93,7 +103,7 @@ for alpha = [1]
         %         imwrite(yhat_cfa, imname);
         %         imname = sprintf([method '_CC15_asymptotical_alpha' num2str(alpha) '_' TT_im_dir(i).name]);
         %         imwrite(yhat_asy, imname);
-        imname = sprintf(['C:/Users/csjunxu/Desktop/CVPR2017/cc_Results/' method '/' method '_CC15_algebraic_alpha' num2str(alpha) '_' TT_im_dir(i).name]);
+        imname = sprintf(['C:/Users/csjunxu/Desktop/CVPR2017/our_Results/' method '_our_algebraic_alpha' num2str(alpha) '_' TT_im_dir(i).name]);
         imwrite(yhat_alg, imname);
     end
     mPSNR_yhat=mean(PSNR_yhat);
@@ -112,7 +122,7 @@ for alpha = [1]
     mSSIM_yhat_alg=mean(SSIM_yhat_alg);
     fprintf('The average PSNR_yhat_alg = %2.4f, SSIM_yhat_alg = %2.4f. \n', mPSNR_yhat_alg,mSSIM_yhat_alg);
     
-    name = sprintf(['C:/Users/csjunxu/Desktop/CVPR2017/cc_Results/' method '_CC' num2str(im_num) '_alpha' num2str(alpha) '.mat']);
+    name = sprintf(['C:/Users/csjunxu/Desktop/CVPR2017/our_Results/' method '_our' num2str(im_num) '_alpha' num2str(alpha) '.mat']);
     save(name,'PSNR_yhat','SSIM_yhat','mPSNR_yhat','mSSIM_yhat','PSNR_yhat_cfa','SSIM_yhat_cfa','mPSNR_yhat_cfa','mSSIM_yhat_cfa','PSNR_yhat_asy','SSIM_yhat_asy','mPSNR_yhat_asy','mSSIM_yhat_asy','PSNR_yhat_alg','SSIM_yhat_alg','mPSNR_yhat_alg','mSSIM_yhat_alg');
 end
 
