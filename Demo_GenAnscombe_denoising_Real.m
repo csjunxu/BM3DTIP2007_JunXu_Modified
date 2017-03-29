@@ -37,6 +37,8 @@ for alpha = [1]
     
     PSNR_yhat_alg   =  [];
     SSIM_yhat_alg   =  [];
+    
+    RunTime = [];
     for i = 1:im_num
         
         z = im2double( imread(fullfile(TT_Original_image_dir, TT_im_dir(i).name)) );
@@ -48,6 +50,8 @@ for alpha = [1]
         
         % mixed Poisson-Gaussian noise parameters
         yhat_alg  = zeros(size(z));
+        
+        time0 = clock;
         % Poisson scaling factor
         for c = 1:ch
             % Gaussian component N(g,sigma^2)
@@ -81,18 +85,22 @@ for alpha = [1]
             yhat_cfa(:, :, c) = GenAnscombe_inverse_closed_form(D,sigma,alpha,g);  % closed-form approximation
             yhat_asy(:, :, c) =  (D/2).^2 - 1/8 - sigma^2;                       % asymptotical inverse
             yhat_alg(:, :, c) =  (D/2).^2 - 3/8 - sigma^2;                       % algebraic inverse
+            
+            
+            
         end
-        
-%         
-%         PSNR_yhat   =  [PSNR_yhat csnr( y*255, yhat*255, 0, 0 )];
-%         SSIM_yhat   = [SSIM_yhat  cal_ssim( y*255, yhat*255, 0, 0 )];
-%         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat(end), SSIM_yhat(end ) );
-%         PSNR_yhat_cfa   = [PSNR_yhat_cfa  csnr( y*255, yhat_cfa*255, 0, 0 )];
-%         SSIM_yhat_cfa   = [SSIM_yhat_cfa  cal_ssim( y*255, yhat_cfa*255, 0, 0 )];
-%         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat_cfa(end), SSIM_yhat_cfa(end) );
-%         PSNR_yhat_asy   = [PSNR_yhat_asy  csnr( y*255, yhat_asy*255, 0, 0 )];
-%         SSIM_yhat_asy   =  [SSIM_yhat_asy cal_ssim( y*255, yhat_asy*255, 0, 0 )];
-%         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat_asy(end), SSIM_yhat_asy(end) );
+        RunTime = [RunTime etime(clock,time0)];
+        fprintf('Total elapsed time = %f s\n', (etime(clock,time0)) );
+        %
+        %         PSNR_yhat   =  [PSNR_yhat csnr( y*255, yhat*255, 0, 0 )];
+        %         SSIM_yhat   = [SSIM_yhat  cal_ssim( y*255, yhat*255, 0, 0 )];
+        %         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat(end), SSIM_yhat(end ) );
+        %         PSNR_yhat_cfa   = [PSNR_yhat_cfa  csnr( y*255, yhat_cfa*255, 0, 0 )];
+        %         SSIM_yhat_cfa   = [SSIM_yhat_cfa  cal_ssim( y*255, yhat_cfa*255, 0, 0 )];
+        %         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat_cfa(end), SSIM_yhat_cfa(end) );
+        %         PSNR_yhat_asy   = [PSNR_yhat_asy  csnr( y*255, yhat_asy*255, 0, 0 )];
+        %         SSIM_yhat_asy   =  [SSIM_yhat_asy cal_ssim( y*255, yhat_asy*255, 0, 0 )];
+        %         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat_asy(end), SSIM_yhat_asy(end) );
         PSNR_yhat_alg   = [PSNR_yhat_alg  csnr( y*255, yhat_alg*255, 0, 0 )];
         SSIM_yhat_alg   = [SSIM_yhat_alg  cal_ssim( y*255, yhat_alg*255, 0, 0 )];
         fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n', TT_im_dir(i).name, PSNR_yhat_alg(end), SSIM_yhat_alg(end) );
@@ -106,24 +114,25 @@ for alpha = [1]
         imname = sprintf(['C:/Users/csjunxu/Desktop/CVPR2017/our_Results/' method '_our_algebraic_alpha' num2str(alpha) '_' TT_im_dir(i).name]);
         imwrite(yhat_alg, imname);
     end
-%     mPSNR_yhat=mean(PSNR_yhat);
-%     mSSIM_yhat=mean(SSIM_yhat);
-%     fprintf('The average PSNR_yhat = %2.4f, SSIM_yhat = %2.4f. \n', mPSNR_yhat,mSSIM_yhat);
-%     
-%     mPSNR_yhat_cfa=mean(PSNR_yhat_cfa);
-%     mSSIM_yhat_cfa=mean(SSIM_yhat_cfa);
-%     fprintf('The average PSNR_yhat_cfa = %2.4f, SSIM_yhat_cfa = %2.4f. \n', mPSNR_yhat_cfa,mSSIM_yhat_cfa);
-%     
-%     mPSNR_yhat_asy=mean(PSNR_yhat_asy);
-%     mSSIM_yhat_asy=mean(SSIM_yhat_asy);
-%     fprintf('The average PSNR_yhat_asy = %2.4f, SSIM_yhat_asy = %2.4f. \n', mPSNR_yhat_asy,mSSIM_yhat_asy);
+    %     mPSNR_yhat=mean(PSNR_yhat);
+    %     mSSIM_yhat=mean(SSIM_yhat);
+    %     fprintf('The average PSNR_yhat = %2.4f, SSIM_yhat = %2.4f. \n', mPSNR_yhat,mSSIM_yhat);
+    %
+    %     mPSNR_yhat_cfa=mean(PSNR_yhat_cfa);
+    %     mSSIM_yhat_cfa=mean(SSIM_yhat_cfa);
+    %     fprintf('The average PSNR_yhat_cfa = %2.4f, SSIM_yhat_cfa = %2.4f. \n', mPSNR_yhat_cfa,mSSIM_yhat_cfa);
+    %
+    %     mPSNR_yhat_asy=mean(PSNR_yhat_asy);
+    %     mSSIM_yhat_asy=mean(SSIM_yhat_asy);
+    %     fprintf('The average PSNR_yhat_asy = %2.4f, SSIM_yhat_asy = %2.4f. \n', mPSNR_yhat_asy,mSSIM_yhat_asy);
     
     mPSNR_yhat_alg=mean(PSNR_yhat_alg);
     mSSIM_yhat_alg=mean(SSIM_yhat_alg);
     fprintf('The average PSNR_yhat_alg = %2.4f, SSIM_yhat_alg = %2.4f. \n', mPSNR_yhat_alg,mSSIM_yhat_alg);
+    mRunTime = mean(RunTime);
     
     name = sprintf(['C:/Users/csjunxu/Desktop/CVPR2017/our_Results/' method '_our' num2str(im_num) '_alpha' num2str(alpha) '.mat']);
-    save(name,'PSNR_yhat','SSIM_yhat','mPSNR_yhat','mSSIM_yhat','PSNR_yhat_cfa','SSIM_yhat_cfa','mPSNR_yhat_cfa','mSSIM_yhat_cfa','PSNR_yhat_asy','SSIM_yhat_asy','mPSNR_yhat_asy','mSSIM_yhat_asy','PSNR_yhat_alg','SSIM_yhat_alg','mPSNR_yhat_alg','mSSIM_yhat_alg');
+    save(name,'PSNR_yhat_alg','SSIM_yhat_alg','mPSNR_yhat_alg','mSSIM_yhat_alg','RunTime','mRunTime');
 end
 
 
