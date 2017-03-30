@@ -24,7 +24,7 @@ GT_im_dir  = dir(GT_fpath);
 TT_im_dir  = dir(TT_fpath);
 im_num = length(TT_im_dir);
 
-method = 'BM3DPoisson';
+method = 'GATBM3D';
 for alpha = [1]
     PSNR_yhat   = [];
     SSIM_yhat   =  [];
