@@ -1,10 +1,10 @@
 clear;
 
 %% read  image directory
-% GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
-% GT_fpath = fullfile(GT_Original_image_dir, '*.png');
-% TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
-% TT_fpath = fullfile(TT_Original_image_dir, '*.png');
+GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
+GT_fpath = fullfile(GT_Original_image_dir, '*.png');
+TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
+TT_fpath = fullfile(TT_Original_image_dir, '*.png');
 % GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
 % GT_fpath = fullfile(GT_Original_image_dir, '*mean.png');
 % TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
@@ -14,10 +14,10 @@ clear;
 % GT_fpath = fullfile(GT_Original_image_dir, '*.png');
 % TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_NoisyImage\';
 % TT_fpath = fullfile(TT_Original_image_dir, '*.png');
-GT_Original_image_dir = 'C:/Users/csjunxu/Desktop/CVPR2017/our_Results/Real_MeanImage/';
-GT_fpath = fullfile(GT_Original_image_dir, '*.JPG');
-TT_Original_image_dir = 'C:/Users/csjunxu/Desktop/CVPR2017/our_Results/Real_NoisyImage/';
-TT_fpath = fullfile(TT_Original_image_dir, '*.JPG');
+% GT_Original_image_dir = 'C:/Users/csjunxu/Desktop/CVPR2017/our_Results/Real_MeanImage/';
+% GT_fpath = fullfile(GT_Original_image_dir, '*.JPG');
+% TT_Original_image_dir = 'C:/Users/csjunxu/Desktop/CVPR2017/our_Results/Real_NoisyImage/';
+% TT_fpath = fullfile(TT_Original_image_dir, '*.JPG');
 
 
 GT_im_dir  = dir(GT_fpath);
@@ -26,7 +26,7 @@ im_num = length(TT_im_dir);
 
 method = 'CBM3D';
 % write image directory
-write_sRGB_dir = ['C:/Users/csjunxu/Desktop/CVPR2017/our_Results/'];
+write_sRGB_dir = ['C:/Users/csjunxu/Desktop/CVPR2017/1_Results/'];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
@@ -40,7 +40,7 @@ SSIM = [];
 CCPSNR = [];
 CCSSIM = [];
 RunTime = [];
-for i = 1 : im_num
+for i = [5 7 8 14 ]% 1 : im_num
     IMin = im2double(imread(fullfile(TT_Original_image_dir,TT_im_dir(i).name) ));
     IM_GT = im2double(imread(fullfile(GT_Original_image_dir, GT_im_dir(i).name)));
     S = regexp(TT_im_dir(i).name, '\.', 'split');

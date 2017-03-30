@@ -40,7 +40,7 @@ for alpha = [1]
     SSIM_yhat_alg   =  [];
     
     RunTime = [];
-    for i = [5 8 14 ]%1:im_num
+    for i = [5 7 8 14 ]%1:im_num
         
         z = im2double( imread(fullfile(TT_Original_image_dir, TT_im_dir(i).name)) );
         y = im2double( imread(fullfile(GT_Original_image_dir, GT_im_dir(i).name)) );
