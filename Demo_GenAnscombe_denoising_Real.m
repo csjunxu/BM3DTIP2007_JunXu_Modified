@@ -10,21 +10,22 @@ clear all
 % TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_NoisyImage\';
 % TT_fpath = fullfile(TT_Original_image_dir, '*.png');
 
-% GT_Original_image_dir =  'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
-% GT_fpath = fullfile(GT_Original_image_dir, '*.png');
-% TT_Original_image_dir =  'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
-% TT_fpath = fullfile(TT_Original_image_dir, '*.png');
+% GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\our_Results\Real_MeanImage\';
+% GT_fpath = fullfile(GT_Original_image_dir, '*.JPG');
+% TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\our_Results\Real_NoisyImage\';
+% TT_fpath = fullfile(TT_Original_image_dir, '*.JPG');
 
-GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\our_Results\Real_MeanImage\';
-GT_fpath = fullfile(GT_Original_image_dir, '*.JPG');
-TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\our_Results\Real_NoisyImage\';
-TT_fpath = fullfile(TT_Original_image_dir, '*.JPG');
+GT_Original_image_dir =  'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
+GT_fpath = fullfile(GT_Original_image_dir, '*.png');
+TT_Original_image_dir =  'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
+TT_fpath = fullfile(TT_Original_image_dir, '*.png');
 
 GT_im_dir  = dir(GT_fpath);
 TT_im_dir  = dir(TT_fpath);
 im_num = length(TT_im_dir);
 
 method = 'GATBM3D';
+
 for alpha = [1]
     PSNR_yhat   = [];
     SSIM_yhat   =  [];
@@ -39,7 +40,7 @@ for alpha = [1]
     SSIM_yhat_alg   =  [];
     
     RunTime = [];
-    for i = 1:im_num
+    for i = [5 8 14 ]%1:im_num
         
         z = im2double( imread(fullfile(TT_Original_image_dir, TT_im_dir(i).name)) );
         y = im2double( imread(fullfile(GT_Original_image_dir, GT_im_dir(i).name)) );
@@ -111,7 +112,7 @@ for alpha = [1]
         %         imwrite(yhat_cfa, imname);
         %         imname = sprintf([method '_CC15_asymptotical_alpha' num2str(alpha) '_' TT_im_dir(i).name]);
         %         imwrite(yhat_asy, imname);
-        imname = sprintf(['C:/Users/csjunxu/Desktop/CVPR2017/our_Results/' method '_our_algebraic_alpha' num2str(alpha) '_' TT_im_dir(i).name]);
+        imname = sprintf(['C:/Users/csjunxu/Desktop/CVPR2017/1_Results/' method '_our_algebraic_alpha' num2str(alpha) '_' TT_im_dir(i).name]);
         imwrite(yhat_alg, imname);
     end
     %     mPSNR_yhat=mean(PSNR_yhat);
@@ -126,13 +127,13 @@ for alpha = [1]
     %     mSSIM_yhat_asy=mean(SSIM_yhat_asy);
     %     fprintf('The average PSNR_yhat_asy = %2.4f, SSIM_yhat_asy = %2.4f. \n', mPSNR_yhat_asy,mSSIM_yhat_asy);
     
-    mPSNR_yhat_alg=mean(PSNR_yhat_alg);
-    mSSIM_yhat_alg=mean(SSIM_yhat_alg);
-    fprintf('The average PSNR_yhat_alg = %2.4f, SSIM_yhat_alg = %2.4f. \n', mPSNR_yhat_alg,mSSIM_yhat_alg);
-    mRunTime = mean(RunTime);
-    
-    name = sprintf(['C:/Users/csjunxu/Desktop/CVPR2017/our_Results/' method '_our' num2str(im_num) '_alpha' num2str(alpha) '.mat']);
-    save(name,'PSNR_yhat_alg','SSIM_yhat_alg','mPSNR_yhat_alg','mSSIM_yhat_alg','RunTime','mRunTime');
+    %     mPSNR_yhat_alg=mean(PSNR_yhat_alg);
+    %     mSSIM_yhat_alg=mean(SSIM_yhat_alg);
+    %     fprintf('The average PSNR_yhat_alg = %2.4f, SSIM_yhat_alg = %2.4f. \n', mPSNR_yhat_alg,mSSIM_yhat_alg);
+    %     mRunTime = mean(RunTime);
+    %
+    %     name = sprintf(['C:/Users/csjunxu/Desktop/CVPR2017/our_Results/' method '_our' num2str(im_num) '_alpha' num2str(alpha) '.mat']);
+    %     save(name,'PSNR_yhat_alg','SSIM_yhat_alg','mPSNR_yhat_alg','mSSIM_yhat_alg','RunTime','mRunTime');
 end
 
 
