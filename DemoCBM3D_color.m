@@ -27,7 +27,8 @@ end
 
 % nSig = [5 30 15];
 % nSig = [40 20 30];
-nSig = [30 10 50];
+% nSig = [30 10 50];
+nSig = [25 25 25];
 
 colorspace = 'opp' ;
 print_to_screen = 0;
@@ -62,7 +63,7 @@ for i = 1 : im_num
     SSIM = [SSIM cal_ssim( IMout*255, IM_GT*255, 0, 0 )];
     fprintf('The final PSNR = %2.4f, SSIM = %2.4f. \n', PSNR(end), SSIM(end));
     %% output
-    imwrite(IMout, [write_sRGB_dir method '_nSig' num2str(nSig(1)) num2str(nSig(2)) num2str(nSig(3)) '_' IMname '.png']);
+%     imwrite(IMout, [write_sRGB_dir method '_nSig' num2str(nSig(1)) num2str(nSig(2)) num2str(nSig(3)) '_' IMname '.png']);
 end
 mPSNR = mean(PSNR);
 mSSIM = mean(SSIM);
