@@ -46,12 +46,14 @@ for i = 1 : im_num
     fprintf('%s: \n',im_dir(i).name);
     [h, w, ch] = size(IM_GT);
     IMin = zeros(size(IM_GT));
-    for c = 1:ch
-        randn('seed',0);
-        IMin(:, :, c) = IM_GT(:, :, c) + nSig(c)/255 * randn(size(IM_GT(:, :, c)));
-    end
+    randn('seed',0);
+    IMin = IM_GT + nSig(1)/255 * randn(size(IM_GT));
+%     for c = 1:ch
+%         randn('seed',0);
+%         IMin(:, :, c) = IM_GT(:, :, c) + nSig(c)/255 * randn(size(IM_GT(:, :, c)));
+%     end
     fprintf('The initial PSNR = %2.4f, SSIM = %2.4f. \n', csnr( IMin*255,IM_GT*255, 0, 0 ), cal_ssim( IMin*255, IM_GT*255, 0, 0 ));
-    imwrite(IMin, [write_sRGB_dir 'Noisy_nSig' num2str(nSig(1)) num2str(nSig(2)) num2str(nSig(3)) '_' IMname '.png']);
+%     imwrite(IMin, [write_sRGB_dir 'Noisy_nSig' num2str(nSig(1)) num2str(nSig(2)) num2str(nSig(3)) '_' IMname '.png']);
     
     %% denoising
     %     nSig = NoiseLevel( IMin*255);
