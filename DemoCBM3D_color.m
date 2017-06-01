@@ -56,8 +56,9 @@ for i = 1 : im_num
     %% denoising
     %     nSig = NoiseLevel( IMin*255);
     %     nSig = NoiseEstimation( IMin*255, 8);
-    mnSig = sqrt(sum(nSig.^2)/3);
-    [~, IMout] = CBM3D(IM_GT, IMin, mnSig, profile, print_to_screen, colorspace);
+%     mnSig = sqrt(sum(nSig.^2)/3);
+
+    [~, IMout] = CBM3D(IM_GT, IMin, nSig, profile, print_to_screen, colorspace);
     %% output
     PSNR = [PSNR csnr( IMout*255, IM_GT*255, 0, 0 )];
     SSIM = [SSIM cal_ssim( IMout*255, IM_GT*255, 0, 0 )];
