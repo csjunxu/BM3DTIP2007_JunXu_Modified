@@ -28,6 +28,7 @@ im_num = length(TT_im_dir);
 
 method = 'CBM3D';
 % write image directory
+write_MAT_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/PolyU_Results/'];
 write_sRGB_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/PolyU_Results/' method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
@@ -76,5 +77,5 @@ mSSIM = mean(SSIM);
 mnPSNR = mean(nPSNR);
 mnSSIM = mean(nSSIM);
 mRunTime = mean(RunTime);
-matname = sprintf([write_sRGB_dir method '_our.mat']);
+matname = sprintf([write_MAT_dir method '_our.mat']);
 save(matname,'PSNR','SSIM','mPSNR','mSSIM','nPSNR','nSSIM','mnPSNR','mnSSIM','RunTime','mRunTime');
