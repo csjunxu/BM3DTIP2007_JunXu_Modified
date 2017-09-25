@@ -1,5 +1,4 @@
 clear;
-
 %% read  image directory
 % GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
 % GT_fpath = fullfile(GT_Original_image_dir, '*.png');
