@@ -36,7 +36,7 @@ for i = 1 : im_num
     SSIM = [SSIM cal_ssim( IMout*255, IM_GT*255, 0, 0 )];
     fprintf('The final PSNR = %2.4f, SSIM = %2.4f. \n', PSNR(end), SSIM(end));
     %% output
-    imwrite(IMout, ['C:/Users/csjunxu/Desktop/CVPR2017/cc_Results/Real_BM3D/BM3D_BID_' IMname '.png']);
+    imwrite(IMout, ['C:\Users\csjunxu\Desktop\CVPR2018 Denoising\PolyUResults\Real_BM3D\BM3D_' IMname '.png']);
 end
 mPSNR = mean(PSNR);
 mSSIM = mean(SSIM);

@@ -28,7 +28,7 @@ im_num = length(TT_im_dir);
 
 method = 'CBM3D';
 % write image directory
-write_sRGB_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/PolyU_Results/' method];
+write_sRGB_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/PolyU_Results/'];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
@@ -39,14 +39,14 @@ profile = 'np'; %or 'np'
 
 PSNR = [];
 SSIM = [];
-nPSNR = [];
-nSSIM = [];
+NPSNR = [];
+NSSIM = [];
 RunTime = [];
 for i =  1 : im_num
     IMin = im2double(imread(fullfile(TT_Original_image_dir,TT_im_dir(i).name) ));
     IM_GT = im2double(imread(fullfile(GT_Original_image_dir, GT_im_dir(i).name)));
-    nPSNR = [nPSNR csnr( IMin*255,IM_GT*255, 0, 0 )];
-    nSSIM = [nSSIM cal_ssim( IMin*255, IM_GT*255, 0, 0 )];
+    NPSNR = [NPSNR csnr( IMin*255,IM_GT*255, 0, 0 )];
+    NSSIM = [NSSIM cal_ssim( IMin*255, IM_GT*255, 0, 0 )];
     S = regexp(TT_im_dir(i).name, '\.', 'split');
     IMname = S{1};
     fprintf('%s: \n',TT_im_dir(i).name);
@@ -69,7 +69,7 @@ for i =  1 : im_num
     SSIM = [SSIM cal_ssim( IMout*255, IM_GT*255, 0, 0 )];
     fprintf('The final PSNR = %2.4f, SSIM = %2.4f. \n', PSNR(end), SSIM(end));
     %% output
-    imwrite(IMout, [write_sRGB_dir '/' method '_our_' IMname '.png']);
+    imwrite(IMout, [write_sRGB_dir method '/' method '_our_' IMname '.png']);
 end
 mPSNR = mean(PSNR);
 mSSIM = mean(SSIM);
