@@ -47,8 +47,8 @@ for i =  1 : im_num
     IM_GT = im2double(imread(fullfile(GT_Original_image_dir, GT_im_dir(i).name)));
     nPSNR = [nPSNR csnr( IMin*255,IM_GT*255, 0, 0 )];
     nSSIM = [nSSIM cal_ssim( IMin*255, IM_GT*255, 0, 0 )];
-    S = regexp(TT_im_dir(i).name, '\.', 'split');
-    IMname = S{1};
+    % S = regexp(TT_im_dir(i).name, '\.', 'split');
+    IMname = TT_im_dir(i).name(1:end-9);
     fprintf('%s: \n',TT_im_dir(i).name);
     [h, w, ch] = size(IM_GT);
     time0 = clock;
