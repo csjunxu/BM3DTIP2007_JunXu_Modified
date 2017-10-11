@@ -36,8 +36,8 @@ im_num = length(im_dir);
 % -------------------------------------------------------------------------
 %% directory to save the results
 method = 'BM3D-SAPCA';
-writematpath = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\Results_Gaussian\';
-writefilepath  = [writematpath method '\'];
+writematpath = 'C:/Users/csjunxu/Desktop/CVPR2018 Denoising/Results_Gaussian/';
+writefilepath  = [writematpath method '/'];
 if ~isdir(writefilepath)
     mkdir(writefilepath);
 end
@@ -47,17 +47,17 @@ for nSig = [20 40 60 80 100]
     for i = 1:im_num
         S = regexp(im_dir(i).name, '\.', 'split');
         %                     read the clean image and normalization
-        I = double(imread( strcat(Original_image_dir,im_dir(i).name) ))/255;
+        I = im2double(imread( strcat(Original_image_dir,im_dir(i).name) ));
         randn('seed', 0);
         noiseI = I + nSig/255*randn(size(I));
         fprintf(' The noise level is :%2.2f. \n',nSig);
         %                     Denoise 'noiseI'. The denoised image is 'restoredI'
-        restoredI = BM3DSAPCA2009(noiseI,nSig);
+        restoredI = BM3DSAPCA2009(noiseI,nSig/255);
         %                     Compute the putput PSNR
         PSNR = [PSNR csnr( restoredI*255, I*255, 0, 0 )];
         SSIM = [SSIM cal_ssim( restoredI*255, I*255, 0, 0 )];
         restoredIn = sprintf([writefilepath 'BM3DSAPCA_' num2str(nSig) '_' im_dir(i).name]);
-        imwrite(restoredI,restoredIn,'png');
+        imwrite(restoredI, restoredIn,'png');
         fprintf('PSNR is:%f, SSIM is %f\n',csnr( restoredI*255, I*255, 0, 0 ),cal_ssim( restoredI*255, I*255, 0, 0 ));
     end
     mPSNR = mean(PSNR);
