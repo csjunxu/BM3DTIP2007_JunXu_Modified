@@ -1,6 +1,5 @@
 % BM3D-SAPCA : BM3D with Shape-Adaptive Principal Component Analysis  (v1.00, 2009)
 % (demo script)
-%
 % BM3D-SAPCA is an algorithm for attenuation of additive white Gaussian noise (AWGN)
 % from grayscale images. This algorithm reproduces the results from the article:
 %  K. Dabov, A. Foi, V. Katkovnik, and K. Egiazarian, "BM3D Image Denoising with
@@ -8,15 +7,12 @@
 %  with Adaptive Sparse Structured Representations (SPARS'09), Saint-Malo, France,
 %  April 2009.     (PDF available at  http://www.cs.tut.fi/~foi/GCF-BM3D )
 %
-%
 % SYNTAX:
-%
 %     y_est = BM3DSAPCA2009(z, sigma)
 %
 % where  z  is an image corrupted by AWGN with noise standard deviation  sigma
 % and  y_est  is an estimate of the noise-free image.
 % Signals are assumed on the intensity range [0,1].
-%
 %
 % USAGE EXAMPLE:
 %
@@ -25,13 +21,10 @@
 %     z=y+sigma*randn(size(y));
 %     y_est = BM3DSAPCA2009(z,sigma);
 %
-%
-%
 % Copyright (c) 2009-2011 Tampere University of Technology.   All rights reserved.
 % This work should only be used for nonprofit purposes.
 %
 % author:  Alessandro Foi,   email:  firstname.lastname@tut.fi
-%
 %%
 clear all
 addpath('BM3D-SAPCA');
