@@ -33,7 +33,6 @@
 % author:  Alessandro Foi,   email:  firstname.lastname@tut.fi
 %
 %%
-
 clear all
 addpath('BM3D-SAPCA');
 Original_image_dir  =    'C:\Users\csjunxu\Desktop\Projects\WODL\20images\';
@@ -41,6 +40,14 @@ Sdir = regexp(Original_image_dir, '\', 'split');
 fpath = fullfile(Original_image_dir,'*.png');
 im_dir  = dir(fpath);
 im_num = length(im_dir);
+% -------------------------------------------------------------------------
+%% directory to save the results
+method = 'BM3D-SAPCA';
+writematpath = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\Results_Gaussian\';
+writefilepath  = [writematpath method '\'];
+if ~isdir(writefilepath)
+    mkdir(writefilepath);
+end
 for nSig = [20 40 60 80 100]
     PSNR = [];
     SSIM = [];
@@ -56,12 +63,12 @@ for nSig = [20 40 60 80 100]
         %                     Compute the putput PSNR
         PSNR = [PSNR csnr( restoredI*255, I*255, 0, 0 )];
         SSIM = [SSIM cal_ssim( restoredI*255, I*255, 0, 0 )];
-        restoredIn = sprintf('C:/Users/csjunxu/Desktop/NIPS2017/W3Results/BM3DSAPCA_nSig%d_%s',nSig,im_dir(i).name);
+        restoredIn = sprintf([writefilepath 'BM3DSAPCA_' num2str(nSig) '_' im_dir(i).name]);
         imwrite(restoredI,restoredIn,'png');
         fprintf('PSNR is:%f, SSIM is %f\n',csnr( restoredI*255, I*255, 0, 0 ),cal_ssim( restoredI*255, I*255, 0, 0 ));
     end
     mPSNR = mean(PSNR);
     mSSIM = mean(SSIM);
-    matname = sprintf('C:/Users/csjunxu/Documents/GitHub/WODL_RID/Gaussian/BM3DSAPCA_nSig%d.mat',nSig);
+    matname = sprintf([writematpath 'BM3DSAPCA_' num2str(nSig) '.mat']);
     save(matname,'nSig','PSNR','SSIM','mPSNR','mSSIM');
 end
