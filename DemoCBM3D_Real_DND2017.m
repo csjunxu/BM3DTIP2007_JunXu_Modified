@@ -49,10 +49,10 @@ for i = 1:im_num
         imwrite(IMout, [write_sRGB_dir '/' method '_DND_' IMinname '.png']);
     end
 end
-% mPSNR = mean(PSNR);
-% mSSIM = mean(SSIM);
-% mnPSNR = mean(nPSNR);
-% mnSSIM = mean(nSSIM);
-% mRunTime = mean(RunTime);
-% matname = sprintf([write_MAT_dir method '_our.mat']);
-% save(matname,'PSNR','SSIM','mPSNR','mSSIM','nPSNR','nSSIM','mnPSNR','mnSSIM','RunTime','mRunTime');
+mPSNR = mean(PSNR);
+mSSIM = mean(SSIM);
+mnPSNR = mean(nPSNR);
+mnSSIM = mean(nSSIM);
+mRunTime = mean(RunTime);
+matname = sprintf([write_MAT_dir method '_DND.mat']);
+save(matname,'PSNR','SSIM','mPSNR','mSSIM','nPSNR','nSSIM','mnPSNR','mnSSIM','RunTime','mRunTime');
