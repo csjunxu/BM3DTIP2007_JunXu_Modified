@@ -14,8 +14,9 @@ NSSIM = [];
 for i = 1 : im_num
     IMin = im2double(imread(fullfile(TT_Original_image_dir,TT_im_dir(i).name) ));
     IM_GT = im2double(imread(fullfile(GT_Original_image_dir, GT_im_dir(i).name)));
-    S = regexp(TT_im_dir(i).name, '\.', 'split');
-    IMname = S{1};
+    %     S = regexp(TT_im_dir(i).name, '\.', 'split');
+    %     IMname = S{1};
+    IMname = TT_im_dir(i).name(1:end-9);
     [h,w,ch] = size(IMin);
     fprintf('%s: \n',TT_im_dir(i).name);
     NPSNR = [NPSNR csnr( IMin*255,IM_GT*255, 0, 0 )];
