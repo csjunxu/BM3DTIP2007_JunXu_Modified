@@ -48,6 +48,7 @@ for i = 1:im_num
         %% output
         imwrite(IMout, [write_sRGB_dir '/' method '_DND_' IMinname '.png']);
     end
+    clear InoisySRGB;
 end
 mPSNR = mean(PSNR);
 mSSIM = mean(SSIM);
