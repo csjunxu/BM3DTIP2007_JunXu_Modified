@@ -8,7 +8,7 @@ load 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\dnd_2017\info.mat';
 method = 'CBM3D';
 % write image directory
 write_MAT_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/dnd_2017Results/'];
-write_sRGB_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/dnd_2017Results/' method];
+write_sRGB_dir = [write_MAT_dir method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
@@ -38,7 +38,7 @@ for i = 1:im_num
         %         mnSig = NoiseEstimation(IMin*255, 8);
         fprintf('The initial PSNR = %2.4f, SSIM = %2.4f. \n', csnr( IMin*255,IM_GT*255, 0, 0 ), cal_ssim( IMin*255, IM_GT*255, 0, 0 ));
         %% denoising
-        [~, IMout] = CBM3D(IM_GT, IMin, 4*mnSig, profile, print_to_screen, colorspace);
+        [~, IMout] = CBM3D(IM_GT, IMin, mnSig, profile, print_to_screen, colorspace);
         RunTime = [RunTime etime(clock,time0)];
         fprintf('Total elapsed time = %f s\n', (etime(clock,time0)) );
         %% output
