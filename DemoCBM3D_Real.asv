@@ -4,10 +4,10 @@ clear;
 % GT_fpath = fullfile(GT_Original_image_dir, '*.png');
 % TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\d1_Results\Real_NoisyImage\';
 % TT_fpath = fullfile(TT_Original_image_dir, '*.png');
-GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\cc_Results\Real_ccnoise_denoised_part\';
-GT_fpath = fullfile(GT_Original_image_dir, '*mean.png');
-TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\cc_Results\Real_ccnoise_denoised_part\';
-TT_fpath = fullfile(TT_Original_image_dir, '*real.png');
+% GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\cc_Results\Real_ccnoise_denoised_part\';
+% GT_fpath = fullfile(GT_Original_image_dir, '*mean.png');
+% TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\cc_Results\Real_ccnoise_denoised_part\';
+% TT_fpath = fullfile(TT_Original_image_dir, '*real.png');
 % GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\cc_Results\Real_MeanImage\';
 % GT_fpath = fullfile(GT_Original_image_dir, '*.png');
 % TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2018 Denoising\cc_Results\Real_NoisyImage\';
@@ -27,8 +27,8 @@ im_num = length(TT_im_dir);
 
 method = 'CBM3D';
 % write image directory
-write_MAT_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/cc_Results/'];
-write_sRGB_dir = [write_MAT_dir 'Real_' method];
+write_MAT_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/d1_Results/'];
+write_sRGB_dir = [write_MAT_dir ''method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir);
 end
