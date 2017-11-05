@@ -4,10 +4,10 @@ clear;
 % GT_fpath = fullfile(GT_Original_image_dir, '*.png');
 % TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
 % TT_fpath = fullfile(TT_Original_image_dir, '*.png');
-% GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
-% GT_fpath = fullfile(GT_Original_image_dir, '*mean.png');
-% TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
-% TT_fpath = fullfile(TT_Original_image_dir, '*real.png');
+GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
+GT_fpath = fullfile(GT_Original_image_dir, '*mean.png');
+TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
+TT_fpath = fullfile(TT_Original_image_dir, '*real.png');
 % GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_MeanImage\';
 % GT_fpath = fullfile(GT_Original_image_dir, '*.png');
 % TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_NoisyImage\';
@@ -16,10 +16,10 @@ clear;
 % GT_fpath = fullfile(GT_Original_image_dir, '*.JPG');
 % TT_Original_image_dir = 'C:/Users/csjunxu/Desktop/CVPR2017/our_Results/Real_NoisyImage/';
 % TT_fpath = fullfile(TT_Original_image_dir, '*.JPG');
-GT_Original_image_dir = 'C:/Users/csjunxu/Desktop/RID_Dataset/RealisticImage/';
-GT_fpath = fullfile(GT_Original_image_dir, '*mean.JPG');
-TT_Original_image_dir = 'C:/Users/csjunxu/Desktop/RID_Dataset/RealisticImage/';
-TT_fpath = fullfile(TT_Original_image_dir, '*real.JPG');
+% GT_Original_image_dir = 'C:/Users/csjunxu/Desktop/RID_Dataset/RealisticImage/';
+% GT_fpath = fullfile(GT_Original_image_dir, '*mean.JPG');
+% TT_Original_image_dir = 'C:/Users/csjunxu/Desktop/RID_Dataset/RealisticImage/';
+% TT_fpath = fullfile(TT_Original_image_dir, '*real.JPG');
 
 GT_im_dir  = dir(GT_fpath);
 TT_im_dir  = dir(TT_fpath);
@@ -27,10 +27,13 @@ im_num = length(TT_im_dir);
 
 method = 'CBM3D';
 % write image directory
-write_MAT_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/PolyU_Results/'];
-write_sRGB_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/PolyU_Results/' method];
+write_MAT_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/cc_Results/'];
+write_sRGB_dir = ['C:/Users/csjunxu/Desktop/CVPR2018 Denoising/cc_Results/' method];
+if ~isdir(write_MAT_dir)
+    mkdir(write_MAT_dir)
+end
 if ~isdir(write_sRGB_dir)
-    mkdir(write_sRGB_dir)
+    mkdir(write_sRGB_dir);
 end
 
 colorspace = 'opp' ;
@@ -58,10 +61,9 @@ for i =  1 : im_num
     fprintf('The initial PSNR = %2.4f, SSIM = %2.4f. \n', csnr( IMin*255,IM_GT*255, 0, 0 ), cal_ssim( IMin*255, IM_GT*255, 0, 0 ));
     %% denoising
     %     nSig = NoiseLevel( IMin*255);
-    %         mnSig = NoiseEstimation( IMin*255, 6);
-    mnSig = sqrt(sum(nSig.^2)/3);
-    
-    [~, IMout] = CBM3D(IM_GT, IMin, 4*mnSig, profile, print_to_screen, colorspace);
+    %     mnSig = NoiseEstimation( IMin*255, 6);
+    msnSig = sqrt(sum(nSig.^2)/3);
+    [~, IMout] = CBM3D(IM_GT, IMin, msnSig, profile, print_to_screen, colorspace);
     RunTime = [RunTime etime(clock,time0)];
     fprintf('Total elapsed time = %f s\n', (etime(clock,time0)) );
     %% output
@@ -76,5 +78,5 @@ mSSIM = mean(SSIM);
 mnPSNR = mean(nPSNR);
 mnSSIM = mean(nSSIM);
 mRunTime = mean(RunTime);
-matname = sprintf([write_MAT_dir method '_our.mat']);
+matname = sprintf([write_MAT_dir method '_cc.mat']);
 save(matname,'PSNR','SSIM','mPSNR','mSSIM','nPSNR','nSSIM','mnPSNR','mnSSIM','RunTime','mRunTime');
