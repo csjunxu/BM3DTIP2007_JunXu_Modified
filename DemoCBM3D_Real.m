@@ -32,6 +32,7 @@ write_sRGB_dir = [write_MAT_dir 'Real_' method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir);
 end
+dataset  = 'cc';
 
 colorspace = 'opp' ;
 print_to_screen = 0;
@@ -68,12 +69,12 @@ for i =  1 : im_num
     SSIM = [SSIM cal_ssim( IMout*255, IM_GT*255, 0, 0 )];
     fprintf('The final PSNR = %2.4f, SSIM = %2.4f. \n', PSNR(end), SSIM(end));
     %% output
-    imwrite(IMout, [write_sRGB_dir '/' method '_d1_' IMname '.png']);
+    imwrite(IMout, [write_sRGB_dir '/' method '_' dataset '_' IMname '.png']);
 end
 mPSNR = mean(PSNR);
 mSSIM = mean(SSIM);
 mnPSNR = mean(nPSNR);
 mnSSIM = mean(nSSIM);
 mRunTime = mean(RunTime);
-matname = sprintf([write_MAT_dir method '_d1.mat']);
+matname = sprintf([write_MAT_dir method '_' dataset '.mat']);
 save(matname,'PSNR','SSIM','mPSNR','mSSIM','nPSNR','nSSIM','mnPSNR','mnSSIM','RunTime','mRunTime');
