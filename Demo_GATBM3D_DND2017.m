@@ -42,7 +42,7 @@ for alpha = [1]
         load(fullfile(Original_image_dir, im_dir(i).name));
         S = regexp(im_dir(i).name, '\.', 'split');
         [h,w,ch] = size(InoisySRGB);
-        for j = 2 %1:size(info(1).boundingboxes,1)
+        for j = 1:size(info(1).boundingboxes,1)
             IMinname = [S{1} '_' num2str(j)];
             fprintf('%s: \n', IMinname);
             bb = info(i).boundingboxes(j,:);
