@@ -56,7 +56,7 @@ for alpha = [1]
         % Poisson scaling factor
         for c = 1:ch
             % Gaussian component N(g,sigma^2)
-            sigma = NoiseEstimation(z(:, :, c), 8);
+            sigma = NoiseEstimation(z(:, :, c)*255, 8);
             g = 0.0;
             
             %% Apply forward variance stabilizing transformation

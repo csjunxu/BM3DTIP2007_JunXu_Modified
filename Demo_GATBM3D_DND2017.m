@@ -37,7 +37,7 @@ for alpha = [1]
     SSIM_yhat_alg   =  [];
     
     RunTime = [];
-    for i = 1 %1:im_num
+    for i = 1:im_num
         Par.image = i;
         load(fullfile(Original_image_dir, im_dir(i).name));
         S = regexp(im_dir(i).name, '\.', 'split');
@@ -53,7 +53,7 @@ for alpha = [1]
             % noise estimation
             for c = 1:ch
                 % Gaussian component N(g,sigma^2)
-                sigma = NoiseEstimation(z(:, :, c), 8);
+                sigma = NoiseEstimation(z(:, :, c)*255, 8);
                 g = 0.0;
                 
                 %% Apply forward variance stabilizing transformation
@@ -85,12 +85,6 @@ for alpha = [1]
                 yhat_alg(:, :, c) =  (D/2).^2 - 3/8 - sigma^2;                       % algebraic inverse
 
             end
-            % denoising
-            t1=clock;
-            [IMout,Par]  =  Denoising_Guided_EI(Par,model);
-            t2=clock;
-            etime(t2,t1)
-            alltime(Par.image)  = etime(t2, t1);
             %% output
             IMoutname = sprintf([write_sRGB_dir '/' method '_DND_alpha_' num2str(alpha) '_' IMinname '.png']);
             imwrite(yhat_alg, IMoutname);
