@@ -44,7 +44,7 @@ for nSig = [10 20 30]
             end
             %% AMF
             [nIamf,ind]=adpmedft(nI,19);
-            %             ind=(nIamf~=nI)&((nI==255)|(nI==0));
+            %             ind=(nIamf~=nI)&((nI==255)|(nI==0)); % better: from 31.43 to 32.70
             %             nIamf(~ind)=nI(~ind);
             %% noise estimation
             nLevel = NoiseEstimation(nIamf, 8);
