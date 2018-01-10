@@ -6,13 +6,14 @@ fpath = fullfile(Original_image_dir,'*.png');
 im_dir  = dir(fpath);
 im_num = length(im_dir);
 method = 'BM3Damf2';
-write_MAT_dir = ['C:/Users/csjunxu/Desktop/BWNNM/'];
+write_MAT_dir = ['C:/Users/csjunxu/Desktop/TWSCGIN/'];
 write_sRGB_dir = [write_MAT_dir method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
-for nSig = 10 %[10 20]
-    for sp = .1 %[0.1 0.3 0.5]
+
+for nSig = [10 20 30]
+    for sp = [0.1 0.3 0.5]
         imPSNR = [];
         imSSIM = [];
         Type = 0;
@@ -43,17 +44,17 @@ for nSig = 10 %[10 20]
             end
             %% AMF
             [nIamf,ind]=adpmedft(nI,19);
-            ind=(nIamf~=nI)&((nI==255)|(nI==0));
-            nIamf(~ind)=nI(~ind);
+            %             ind=(nIamf~=nI)&((nI==255)|(nI==0));
+            %             nIamf(~ind)=nI(~ind);
             %% noise estimation
-            %             nLevel = NoiseEstimation(nIamf, 8);
-            nLevel = NoiseLevel(nIamf);
+            nLevel = NoiseEstimation(nIamf, 8);
+            %             nLevel = NoiseLevel(nIamf);
             %% denoising
             [~, rI] = BM3D(I, nIamf/255, nLevel);
             %% save Output
             imPSNR = [imPSNR csnr( rI*255, I*255, 0, 0 )];
             imSSIM  = [imSSIM cal_ssim( rI*255, I*255, 0, 0 )];
-            rIname = sprintf([write_sRGB_dir '/BM3D_AMF2_GSPIN_p_' Sdir{end-1} '_nSig' num2str(nSig) '_sp' num2str(sp) '.mat']);
+            rIname = sprintf([write_sRGB_dir '/BM3D_AMF2_GSPIN_p_' Sdir{end-1} '_nSig' num2str(nSig) '_sp' num2str(sp) im_dir(i).name]);
             imwrite(rI,rIname,'png');
             fprintf('PSNR is:%f, SSIM is %f\n',csnr( rI*255, I*255, 0, 0 ),cal_ssim( rI*255, I*255, 0, 0 ));
         end
