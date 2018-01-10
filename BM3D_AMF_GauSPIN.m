@@ -11,8 +11,8 @@ write_sRGB_dir = [write_MAT_dir method];
 if ~isdir(write_sRGB_dir)
     mkdir(write_sRGB_dir)
 end
-for nSig = [10 20]
-    for sp = [0.1 0.3 0.5]
+for nSig = 10 %[10 20]
+    for sp = .1 %[0.1 0.3 0.5]
         imPSNR = [];
         imSSIM = [];
         Type = 0;
@@ -24,12 +24,12 @@ for nSig = [10 20]
             randn('seed', 0);
             nI = I + nSig/255*randn(size(I));
             %% add "salt and pepper" noise
-            %                 rand('seed',Sample-1)
-            %                 noiseI = imnoise(noiseI, 'salt & pepper', SpikyRatio); %"salt and pepper" noise
-            %                 noiseI = noiseI*255;
+            rand('seed', 0)
+            nI = imnoise(nI, 'salt & pepper', sp); %"salt and pepper" noise
+            nI = nI*255;
             %% add "salt and pepper" noise 0 or RVIN noise 1
-            rand('seed',0)
-            [nI,Narr]          =   impulsenoise(nI*255,sp,1);
+            %             rand('seed', 0)
+            %             [nI,Narr]          =   impulsenoise(nI*255,sp,1);
             if Type == 0
                 imname = sprintf([write_MAT_dir 'noisyimages/G' num2str(nSig) '_SPIN' num2str(sp) '_' im_dir(i).name]);
                 imwrite(nI/255,imname);
@@ -46,8 +46,8 @@ for nSig = [10 20]
             ind=(nIamf~=nI)&((nI==255)|(nI==0));
             nIamf(~ind)=nI(~ind);
             %% noise estimation
-            nLevel = NoiseEstimation(nIamf, 8);
-            %             nLevel = NoiseLevel(noiseIAMF);
+            %             nLevel = NoiseEstimation(nIamf, 8);
+            nLevel = NoiseLevel(noiseIAMF);
             %% denoising
             [~, rI] = BM3D(I, nIamf/255, nLevel);
             %% save Output
