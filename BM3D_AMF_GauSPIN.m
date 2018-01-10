@@ -42,20 +42,20 @@ for nSig = [10 20]
                 break;
             end
             %% AMF
-            [noiseIAMF,ind]=adpmedft(nI,19);
-            ind=(noiseIAMF~=nI)&((nI==255)|(nI==0));
-            noiseIAMF(~ind)=nI(~ind);
+            [nIamf,ind]=adpmedft(nI,19);
+            ind=(nIamf~=nI)&((nI==255)|(nI==0));
+            nIamf(~ind)=nI(~ind);
             %% noise estimation
-            nLevel = NoiseEstimation(noiseIAMF, 8);
+            nLevel = NoiseEstimation(nIamf, 8);
             %             nLevel = NoiseLevel(noiseIAMF);
             %% denoising
-            [~, restoredI] = BM3D(I, noiseIAMF/255, nLevel);
+            [~, rI] = BM3D(I, nIamf/255, nLevel);
             %% save Output
-            imPSNR = [imPSNR csnr( restoredI*255, I*255, 0, 0 )];
-            imSSIM  = [imSSIM cal_ssim( restoredI*255, I*255, 0, 0 )];
-            restoredIn = sprintf([write_sRGB_dir '/BM3D_AMF2_GSPIN_p_' Sdir{end-1} '_nSig' num2str(nSig) '_sp' num2str(sp) '.mat']);
-            imwrite(restoredI,restoredIn,'png');
-            fprintf('PSNR is:%f, SSIM is %f\n',csnr( restoredI*255, I*255, 0, 0 ),cal_ssim( restoredI*255, I*255, 0, 0 ));
+            imPSNR = [imPSNR csnr( rI*255, I*255, 0, 0 )];
+            imSSIM  = [imSSIM cal_ssim( rI*255, I*255, 0, 0 )];
+            rIname = sprintf([write_sRGB_dir '/BM3D_AMF2_GSPIN_p_' Sdir{end-1} '_nSig' num2str(nSig) '_sp' num2str(sp) '.mat']);
+            imwrite(rI,rIname,'png');
+            fprintf('PSNR is:%f, SSIM is %f\n',csnr( rI*255, I*255, 0, 0 ),cal_ssim( rI*255, I*255, 0, 0 ));
         end
         %% save Output
         mPSNR = mean(imPSNR);
