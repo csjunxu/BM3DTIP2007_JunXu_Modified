@@ -47,7 +47,7 @@ for nSig = 10 %[10 20]
             nIamf(~ind)=nI(~ind);
             %% noise estimation
             %             nLevel = NoiseEstimation(nIamf, 8);
-            nLevel = NoiseLevel(noiseIAMF);
+            nLevel = NoiseLevel(nIamf);
             %% denoising
             [~, rI] = BM3D(I, nIamf/255, nLevel);
             %% save Output
