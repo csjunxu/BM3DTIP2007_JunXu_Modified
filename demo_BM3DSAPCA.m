@@ -28,7 +28,7 @@
 %%
 clear all
 addpath('BM3D-SAPCA');
-Original_image_dir  =    'C:\Users\csjunxu\Desktop\Projects\WODL\20images\';
+Original_image_dir  =    'C:\Users\csjunxu\Desktop\TWSCGIN\cleanimages\';
 Sdir = regexp(Original_image_dir, '\', 'split');
 fpath = fullfile(Original_image_dir,'*.png');
 im_dir  = dir(fpath);
@@ -36,12 +36,12 @@ im_num = length(im_dir);
 % -------------------------------------------------------------------------
 %% directory to save the results
 method = 'BM3D-SAPCA';
-writematpath = 'C:/Users/csjunxu/Desktop/CVPR2018 Denoising/Results_Gaussian/';
+writematpath = 'C:/Users/csjunxu/Desktop/ECCV2018 Denoising/Results_AWGN/';
 writefilepath  = [writematpath method '/'];
 if ~isdir(writefilepath)
     mkdir(writefilepath);
 end
-for nSig = [20 40 60 80 100]
+for nSig = [15:15:75]
     PSNR = [];
     SSIM = [];
     for i = 1:im_num
