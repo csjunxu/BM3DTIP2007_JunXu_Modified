@@ -1,7 +1,7 @@
 % Script reproducing the results in Table 1 of the paper:
-% [1] M. Mäkitalo and A. Foi, "Optimal inversion of the generalized Anscombe transformation for Poisson-Gaussian noise", IEEE Trans. Image Process., doi:10.1109/TIP.2012.2202675
+% [1] M. Mï¿½kitalo and A. Foi, "Optimal inversion of the generalized Anscombe transformation for Poisson-Gaussian noise", IEEE Trans. Image Process., doi:10.1109/TIP.2012.2202675
 %
-%  Alessandro Foi and Markku Mäkitalo - Tampere University of Technology - 2011-2012
+%  Alessandro Foi and Markku Mï¿½kitalo - Tampere University of Technology - 2011-2012
 % -----------------------------------------------------------------------------------
 
 
@@ -12,10 +12,6 @@ Original_image_dir  =    'C:\Users\csjunxu\Desktop\ECCV2016\grayimages\';
 fpath = fullfile(Original_image_dir,'*.png');
 im_dir  = dir(fpath);
 im_num = length(im_dir);
-% yy = im2double(imread('./images/fluocells.tif'));
-% yy = im2double(imread('./images/Lena512.png'));
-% yy = im2double(imread('./images/boat.png'));
-% yy = im2double(imread('./images/cameraman.tif'));
 
 peaks = [120 60 30 10];  % target peak values for the scaled image
 sigmas = peaks/10;                % standard deviation of the Gaussian noise

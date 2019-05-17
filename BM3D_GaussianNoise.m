@@ -1,12 +1,11 @@
 clear;
 
-Original_image_dir  =    'C:\Users\csjunxu\Desktop\Projects\WODL\20images\';
-% Original_image_dir  =    'C:\Users\csjunxu\Desktop\Projects\WODL\20newimages\';
+Original_image_dir  =    '../DnCNN/testsets/BSD68/'; % Set12 ; BSD68
 Sdir = regexp(Original_image_dir, '\', 'split');
 fpath = fullfile(Original_image_dir,'*.png');
 im_dir  = dir(fpath);
 im_num = length(im_dir);
-for nSig = [20 40 60 80 100]
+for nSig = [5 10 15 20 25]
     PSNR = [];
     SSIM = [];
     for i = 1:im_num
@@ -21,12 +20,12 @@ for nSig = [20 40 60 80 100]
         %                     Compute the putput PSNR
         PSNR = [PSNR csnr( restoredI*255, I*255, 0, 0 )];
         SSIM = [SSIM cal_ssim( restoredI*255, I*255, 0, 0 )];
-        restoredIn = sprintf('C:/Users/csjunxu/Desktop/NIPS2017/W3Results/BM3D_nSig%d_%s',nSig,im_dir(i).name);
+        restoredIn = sprintf('/home/csjunxu/Github/NIPS2019/Gaussian_BSD68_BM3D/BM3D_BSD68_nSig%d_%s',nSig,im_dir(i).name);
         imwrite(restoredI,restoredIn,'png');
         fprintf('PSNR is:%f, SSIM is %f\n',csnr( restoredI*255, I*255, 0, 0 ),cal_ssim( restoredI*255, I*255, 0, 0 ));
     end
     mPSNR = mean(PSNR);
     mSSIM = mean(SSIM);
-    matname = sprintf('C:/Users/csjunxu/Documents/GitHub/WODL_RID/Gaussian/BM3D_nSig%d.mat',nSig);
+    matname = sprintf('/home/csjunxu/Github/NIPS2019/BM3D_BSD68_nSig%d.mat',nSig);
     save(matname,'nSig','PSNR','SSIM','mPSNR','mSSIM');
 end

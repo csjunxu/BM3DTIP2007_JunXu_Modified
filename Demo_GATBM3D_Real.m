@@ -1,24 +1,9 @@
 clear all
 
-% GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
-% GT_fpath = fullfile(GT_Original_image_dir, '*mean.png');
-% TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
-% TT_fpath = fullfile(TT_Original_image_dir, '*real.png');
-
-% GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_MeanImage\';
-% GT_fpath = fullfile(GT_Original_image_dir, '*.png');
-% TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_NoisyImage\';
-% TT_fpath = fullfile(TT_Original_image_dir, '*.png');
-
-% GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\our_Results\Real_MeanImage\';
-% GT_fpath = fullfile(GT_Original_image_dir, '*.JPG');
-% TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\our_Results\Real_NoisyImage\';
-% TT_fpath = fullfile(TT_Original_image_dir, '*.JPG');
-
-GT_Original_image_dir =  'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
-GT_fpath = fullfile(GT_Original_image_dir, '*.png');
-TT_Original_image_dir =  'C:\Users\csjunxu\Desktop\CVPR2017\1_Results\Real_NoisyImage\';
-TT_fpath = fullfile(TT_Original_image_dir, '*.png');
+GT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
+GT_fpath = fullfile(GT_Original_image_dir, '*mean.png');
+TT_Original_image_dir = 'C:\Users\csjunxu\Desktop\CVPR2017\cc_Results\Real_ccnoise_denoised_part\';
+TT_fpath = fullfile(TT_Original_image_dir, '*real.png');
 
 GT_im_dir  = dir(GT_fpath);
 TT_im_dir  = dir(TT_fpath);
